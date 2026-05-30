@@ -8,92 +8,43 @@
 
 <body style="margin:0; background:#000;">
 
+    <!-- 🎵 Background Music -->
     <audio id="bgmusic" loop>
         <source src="music.mp3" type="audio/mp3">
     </audio>
 
+    <!-- ▶ Music button (safe for mobile autoplay rules) -->
     <button onclick="document.getElementById('bgmusic').play()" style="
-    position:fixed;
-    top:15px;
-    left:15px;
-    z-index:10;
-    padding:10px 15px;
-    background:white;
-    border:none;
-    border-radius:8px;
-    font-weight:bold;">
+  position:fixed;
+  top:15px;
+  left:15px;
+  z-index:10;
+  padding:10px 15px;
+  background:white;
+  border:none;
+  border-radius:8px;
+  font-weight:bold;">
         ▶ Music
     </button>
 
-    <model-viewer id="arViewer" src="Meshy_AI_Golden_Lantern_Crown_0530063645_texture-v1.glb" ar ar-modes="webxr"
-        ar-scale="auto" camera-controls auto-rotate rotation-per-second="8deg" loading="eager"
-        style="width:100%; height:100vh;">
+    <model-viewer src="model.glb" ar ar-modes="scene-viewer quick-look webxr" ar-scale="auto" camera-controls
+        auto-rotate rotation-per-second="8deg" style="width:100%; height:100vh;">
 
-        <button id="arButton" slot="ar-button" style="
-      position:absolute;
-      bottom:20px;
-      left:50%;
-      transform:translateX(-50%);
-      padding:12px 20px;
-      background:#FF6B6B;
-      color:white;
-      border-radius:8px;
-      border:none;
-      font-weight:bold;
-      cursor:pointer;
-      font-size:16px;
-      z-index:100;">
+        <button slot="ar-button" style="
+    position:absolute;
+    bottom:20px;
+    left:50%;
+    transform:translateX(-50%);
+    padding:12px 20px;
+    background:white;
+    color:black;
+    border-radius:8px;
+    border:none;
+    font-weight:bold;">
             👁 View in AR
         </button>
 
     </model-viewer>
-
-    <script>
-        const viewer = document.getElementById('arViewer');
-        const arButton = document.getElementById('arButton');
-
-        let isInAR = false;
-        let angle = 0;
-
-        viewer.addEventListener('load', () => {
-            console.log('✅ Model loaded successfully');
-        });
-
-        viewer.addEventListener('error', (e) => {
-            console.error('❌ Model failed to load:', e);
-        });
-
-        viewer.addEventListener('ar-status', (event) => {
-            console.log('AR Status:', event.detail.status);
-
-            if (event.detail.status === 'session-started') {
-                isInAR = true;
-            }
-
-            if (event.detail.status === 'not-presenting') {
-                isInAR = false;
-            }
-        });
-
-        arButton.addEventListener('click', async () => {
-            try {
-                await viewer.activateAR();
-            } catch (error) {
-                alert('AR is not supported. Use Chrome on Android.');
-            }
-        });
-
-        function rotateInAR() {
-            if (isInAR) {
-                angle += 0.5;
-                viewer.setAttribute('orientation', `0deg ${angle}deg 0deg`);
-            }
-
-            requestAnimationFrame(rotateInAR);
-        }
-
-        rotateInAR();
-    </script>
 
 </body>
 
