@@ -27,8 +27,8 @@
         ▶ Music
     </button>
 
-    <model-viewer src="model.glb" ar ar-modes="scene-viewer quick-look webxr" ar-scale="auto" camera-controls
-        auto-rotate rotation-per-second="8deg" style="width:100%; height:100vh;">
+    <model-viewer src="model.glb" ar ar-modes="webxr scene-viewer quick-look" ar-scale="auto" camera-controls
+        auto-rotate rotation-per-second="8deg" style="width:100%; height:100vh;" loading="eager">
 
         <button slot="ar-button" style="
     position:absolute;
@@ -40,11 +40,29 @@
     color:black;
     border-radius:8px;
     border:none;
-    font-weight:bold;">
+    font-weight:bold;
+    cursor:pointer;">
             👁 View in AR
         </button>
 
     </model-viewer>
+
+    <script>
+        const viewer = document.querySelector('model-viewer');
+
+        // Log when model loads
+        viewer.addEventListener('load', () => {
+            console.log('✅ Model loaded successfully');
+        });
+
+        // Log any errors
+        viewer.addEventListener('error', (e) => {
+            console.error('❌ Model failed to load:', e);
+        });
+
+        // Check AR support
+        console.log('AR supported:', viewer.canActivateAR);
+    </script>
 
 </body>
 
